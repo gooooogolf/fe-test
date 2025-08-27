@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const DatePicker = ({ 
   value, 
@@ -7,20 +7,18 @@ const DatePicker = ({
   disabled = false,
   className = ""
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(value || '');
+
+  // Sync with external value prop
+  useEffect(() => {
+    setSelectedDate(value || '');
+  }, [value]);
 
   const handleDateChange = (event) => {
     const newDate = event.target.value;
     setSelectedDate(newDate);
     if (onChange) {
       onChange(newDate);
-    }
-  };
-
-  const handleToggle = () => {
-    if (!disabled) {
-      setIsOpen(!isOpen);
     }
   };
 
